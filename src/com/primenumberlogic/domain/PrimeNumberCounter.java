@@ -2,8 +2,6 @@ package com.primenumberlogic.domain;
 
 import com.google.common.collect.ImmutableList;
 
-import java.util.List;
-
 public class PrimeNumberCounter {
 
     public int count(int maxNumber) {
@@ -32,7 +30,7 @@ public class PrimeNumberCounter {
         return new ImmutableList.Builder<Integer>().addAll(primeNumbers).add(primeNumber).build();
     }
 
-    private boolean isPrime(int number, List<Integer> primeNumbers) {
+    private boolean isPrime(int number, ImmutableList<Integer> primeNumbers) {
 
         if (number <= 1) {
             return false;
