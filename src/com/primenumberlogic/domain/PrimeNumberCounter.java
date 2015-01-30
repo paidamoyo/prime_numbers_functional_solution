@@ -12,21 +12,21 @@ public class PrimeNumberCounter {
 
     }
 
-    private int incrementCount(int maxNumber, int currentNumber, ImmutableList<Integer> primeNumbers) {
+    private int incrementCount(int maxNumber, int decrement, ImmutableList<Integer> primeNumbers) {
 
-        int diff = maxNumber - currentNumber;
+        int currentNumber = maxNumber - decrement;
 
-        if (currentNumber == 0) {
-            return isPrime(diff, primeNumbers) ? primeNumbers.size() + 1 : primeNumbers.size();
+        if (currentNumber == maxNumber) {
+            return isPrime(currentNumber, primeNumbers) ? primeNumbers.size() + 1 : primeNumbers.size();
         }
 
-        if (isPrime(diff, primeNumbers)) {
-            final ImmutableList<Integer> newPrimeNumbers = new ImmutableList.Builder<Integer>().addAll(primeNumbers).add(diff).build();
-            return incrementCount(maxNumber, currentNumber - 1, newPrimeNumbers);
+        if (isPrime(currentNumber, primeNumbers)) {
+            final ImmutableList<Integer> newPrimeNumbers = new ImmutableList.Builder<Integer>().addAll(primeNumbers).add(currentNumber).build();
+            return incrementCount(maxNumber, decrement - 1, newPrimeNumbers);
         }
 
 
-        return incrementCount(maxNumber, currentNumber - 1, primeNumbers);
+        return incrementCount(maxNumber, decrement - 1, primeNumbers);
     }
 
     private boolean isPrime(int number, List<Integer> primeNumbers) {
