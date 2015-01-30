@@ -8,25 +8,28 @@ public class PrimeNumberCounter {
 
     public int count(int maxNumber) {
 
-        return incrementCount(maxNumber, maxNumber, new ImmutableList.Builder<Integer>().build());
+        return aggregate(maxNumber, maxNumber, new ImmutableList.Builder<Integer>().build()).size();
 
     }
 
-    private int incrementCount(int maxNumber, int decrement, ImmutableList<Integer> primeNumbers) {
+    private ImmutableList<Integer> aggregate(int maxNumber, int decrement, ImmutableList<Integer> primeNumbers) {
 
         int currentNumber = maxNumber - decrement;
 
         if (currentNumber == maxNumber) {
-            return isPrime(currentNumber, primeNumbers) ? primeNumbers.size() + 1 : primeNumbers.size();
+            return isPrime(currentNumber, primeNumbers) ? addPrimeNumber(primeNumbers, currentNumber) : primeNumbers;
         }
 
         if (isPrime(currentNumber, primeNumbers)) {
-            final ImmutableList<Integer> newPrimeNumbers = new ImmutableList.Builder<Integer>().addAll(primeNumbers).add(currentNumber).build();
-            return incrementCount(maxNumber, decrement - 1, newPrimeNumbers);
+            return aggregate(maxNumber, decrement - 1, addPrimeNumber(primeNumbers, currentNumber));
         }
 
 
-        return incrementCount(maxNumber, decrement - 1, primeNumbers);
+        return aggregate(maxNumber, decrement - 1, primeNumbers);
+    }
+
+    private ImmutableList<Integer> addPrimeNumber(ImmutableList<Integer> primeNumbers, int primeNumber) {
+        return new ImmutableList.Builder<Integer>().addAll(primeNumbers).add(primeNumber).build();
     }
 
     private boolean isPrime(int number, List<Integer> primeNumbers) {
